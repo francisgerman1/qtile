@@ -1,18 +1,9 @@
-#!/usr/bin/env bash
-# ---
-# Use "run program" to run it only if it is not already running
-# Use "program &" to run it regardless
-# ---
-# NOTE: This script runs with every restart of AwesomeWM
-# TODO: run_once
+#!/bin/bash
 
+xrandr --output HDMI-A-0 --primary --mode 2560x1440 --rate 120 --output eDP --off &
+picom --daemon --config $HOME/.config/qtile/scripts/picom.conf & 
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/usr/bin/wired &
+eval $(gnome-keyring-daemon --start) 
+nm-applet &
 
-function run {
-    if ! pgrep $1 > /dev/null ;
-    then
-        $@&
-    fi
-}
-
-run nitrogen --restore
-run picom -b
